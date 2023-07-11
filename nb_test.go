@@ -16,7 +16,6 @@ func TestFetchMulti(t *testing.T) {
 	}
 }
 
-
 func TestFetchImage(t *testing.T) {
 	res, err := Fetch("neko")
 	if err != nil {
