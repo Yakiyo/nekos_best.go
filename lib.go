@@ -14,6 +14,9 @@ func FetchMany(category string, amount int) ([]NBResponse, error) {
 	if !isValidCategory(category) {
 		return []NBResponse{}, fmt.Errorf("categories %v is not valid. Must be one of %v", category, categories)
 	}
+	if amount < 1 || amount > 20 {
+		return []NBResponse{}, fmt.Errorf("amount must be between 1 and 20")
+	}
 	res, err := http.Get("https://nekos.best/api/v2/" + category + "?amount=" + fmt.Sprint(amount))
 	if err != nil {
 		return []NBResponse{}, err
