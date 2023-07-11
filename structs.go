@@ -54,12 +54,12 @@ var categories = append(gif_categories, image_categories...)
 //
 // Url is always present. For gif endpoints, Source_url and Anime_name exists,
 // and for image endpoints Artist_href and Artist_name exists
-type NBResponse struct{
-	Url string
+type NBResponse struct {
+	Url         string
 	Artist_href string
 	Artist_name string
-	Source_url string
-	Anime_name string
+	Source_url  string
+	Anime_name  string
 }
 
 // Result returned from nekos.best api responses

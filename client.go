@@ -18,7 +18,7 @@ func Fetch(cat string) (NBResponse, error) {
 	}
 	defer res.Body.Close()
 	bytes, err := io.ReadAll(res.Body)
-	
+
 	if err != nil {
 		return NBResponse{}, err
 	}
