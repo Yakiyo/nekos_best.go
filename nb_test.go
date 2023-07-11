@@ -2,8 +2,8 @@ package nekos_best
 
 import (
 	"fmt"
-	"testing"
 	"os"
+	"testing"
 )
 
 func TestFetchMulti(t *testing.T) {
