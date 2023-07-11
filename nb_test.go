@@ -1,8 +1,21 @@
 package nekos_best
 
 import (
+	"fmt"
 	"testing"
 )
+
+func TestFetchMulti(t *testing.T) {
+	length := 3
+	res, err := FetchMany("neko", length)
+	if err != nil {
+		t.Fatalf("Received error %v", err)
+	}
+	if len(res) != length {
+		t.Fatalf("Response result mismatched with expected length. Receive %v responses", fmt.Sprint(len(res)))
+	}
+}
+
 
 func TestFetchImage(t *testing.T) {
 	res, err := Fetch("neko")
