@@ -3,14 +3,13 @@ package nekos_best
 import (
 	"fmt"
 	"testing"
+	"os"
 )
 
 func TestFetchMulti(t *testing.T) {
 	length := 3
 	res, err := FetchMany("neko", length)
-	if err != nil {
-		t.Fatalf("Received error %v", err)
-	}
+	handleErr(err, t)
 	if len(res) != length {
 		t.Fatalf("Response result mismatched with expected length. Receive %v responses", fmt.Sprint(len(res)))
 	}
@@ -18,9 +17,7 @@ func TestFetchMulti(t *testing.T) {
 
 func TestFetchImage(t *testing.T) {
 	res, err := Fetch("neko")
-	if err != nil {
-		t.Fatalf("Received error %v", err)
-	}
+	handleErr(err, t)
 	if res.Url == "" || res.Artist_name == "" {
 		t.Fatalf("Missing required properties in response. Received %v", res)
 	}
@@ -28,10 +25,23 @@ func TestFetchImage(t *testing.T) {
 
 func TestFetchGif(t *testing.T) {
 	res, err := Fetch("baka")
-	if err != nil {
-		t.Fatalf("Received error %v", err)
-	}
+	handleErr(err, t)
 	if res.Url == "" || res.Artist_name != "" {
 		t.Fatalf("Wrong type of properties in response. Received %v", res)
+	}
+}
+
+func TestFetchFile(t *testing.T) {
+	res, err := FetchFile("neko")
+	handleErr(err, t)
+	if len(res.Data) <= 0 {
+		t.Fatalf("Image body is empty")
+	}
+	os.WriteFile("test.png", res.Data, 0644)
+}
+
+func handleErr(e error, t *testing.T) {
+	if e != nil {
+		t.Fatalf("Received error %v", e)
 	}
 }

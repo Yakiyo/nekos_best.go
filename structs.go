@@ -62,6 +62,14 @@ type NBResponse struct {
 	Anime_name  string
 }
 
+// A nekos.best buffer response
+//
+// Used to represent result of an image along with its associated `NBResponse`
+type NBBufferResponse struct {
+	Data []byte
+	Body NBResponse
+}
+
 // Result returned from nekos.best api responses
 type fullNBResponse struct {
 	Results []NBResponse
