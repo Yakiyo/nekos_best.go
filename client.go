@@ -37,3 +37,23 @@ func Fetch(category string) (NBResponse, error) {
 	return res[0], nil
 }
 
+// Fetch a random image file from a category
+func FetchFile(category string) (NBBufferResponse, error) {
+	res, err := Fetch(category)
+	if err != nil {
+		return NBBufferResponse{}, err
+	}
+	resp, err := http.Get(res.Url)
+	if err != nil {
+		return NBBufferResponse{}, err
+	}
+	defer resp.Body.Close()
+	bytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return NBBufferResponse{}, err
+	}
+	return NBBufferResponse{
+		Data: bytes,
+		Body: res,
+	}, nil
+}
