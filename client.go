@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 // Fetch multiple results from a category
@@ -56,4 +58,10 @@ func FetchFile(category string) (NBBufferResponse, error) {
 		Data: bytes,
 		Body: res,
 	}, nil
+}
+
+// Random nekos.best category
+func RandomCategory() string {
+	n := rand.New(rand.NewSource(time.Now().Unix())).Intn(len(categories))
+	return categories[n]
 }

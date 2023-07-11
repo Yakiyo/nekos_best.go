@@ -40,6 +40,13 @@ func TestFetchFile(t *testing.T) {
 	os.WriteFile("test.png", res.Data, 0644)
 }
 
+func TestRandomCat(t *testing.T) {
+	cat := RandomCategory()
+	if !isValidCategory(cat) {
+		t.Fatalf("%v is not a valid category", cat)
+	}
+}
+
 func handleErr(e error, t *testing.T) {
 	if e != nil {
 		t.Fatalf("Received error %v", e)
