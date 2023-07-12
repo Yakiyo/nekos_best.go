@@ -47,6 +47,17 @@ func TestRandomCat(t *testing.T) {
 	}
 }
 
+func TestSearch(t *testing.T) {
+	res, err := Search("Gochuumon wa Usagi Desuka??", "baka", 3)
+	handleErr(err, t)
+	if len(res) < 1 {
+		t.Fatalf("Received zero results")
+	}
+	if res[0].Url == "" {
+		t.Fatalf("Something went wrong. Received %+v", res)
+	}
+}
+
 func handleErr(e error, t *testing.T) {
 	if e != nil {
 		t.Fatalf("Received error %v", e)

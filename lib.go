@@ -6,6 +6,7 @@ import (
 	"io"
 	"math/rand"
 	"net/http"
+	"net/url"
 	"time"
 )
 
@@ -61,6 +62,39 @@ func FetchFile(category string) (NBBufferResponse, error) {
 		Data: bytes,
 		Body: res,
 	}, nil
+}
+
+// Search using a query
+func Search(query string, category string, amount int) ([]NBResponse, error) {
+	if !isValidCategory(category) {
+		return []NBResponse{}, fmt.Errorf("categories %v is not valid. Must be one of %v", category, categories)
+	}
+	t := "2"
+	if contains(image_categories, category) {
+		t = "1"
+	}
+	params := url.Values{
+		"query":    {query},
+		"amount":   {fmt.Sprint(amount)},
+		"category": {category},
+		"type":     {t},
+	}
+	res, err := http.Get(fmt.Sprintf("https://nekos.best/api/v2/%v?%v", category, params.Encode()))
+	if err != nil {
+		return []NBResponse{}, err
+	}
+	if res.StatusCode == 429 {
+		remaining := res.Header.Get("x-rate-limit-remaining")
+		return []NBResponse{}, fmt.Errorf("api ratelimit. Remaining: %v", remaining)
+	}
+	defer res.Body.Close()
+	data, err := io.ReadAll(res.Body)
+	if err != nil {
+		return []NBResponse{}, err
+	}
+	v := &fullNBResponse{}
+	json.Unmarshal(data, v)
+	return v.Results, nil
 }
 
 // Random nekos.best category
