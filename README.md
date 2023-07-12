@@ -53,6 +53,11 @@ res, _ := nb.Search("Gochuumon wa Usagi Desuka??", "baka", 3)
 fmt.Println(res)
 ```
 
+### Generate random category
+```go
+cat := nb.RandomCategory()
+```
+
 ## Author
 
 **nekos_best.go** © [Yakiyo](https://github.com/Yakiyo). Authored and maintained by Yakiyo.
