@@ -77,8 +77,12 @@ type fullNBResponse struct {
 
 // Check wether a category is valid or not
 func isValidCategory(cat string) bool {
-	for _, c := range categories {
-		if cat == c {
+	return contains(categories, cat)
+}
+
+func contains(slice []string, element string) bool {
+	for _, e := range slice {
+		if element == e {
 			return true
 		}
 	}
