@@ -48,6 +48,8 @@ var gif_categories = []string{
 	"yawn",
 	"angry",
 	"run",
+	"bonk",
+	"tableflip",
 }
 
 var categories = append(gif_categories, image_categories...)
