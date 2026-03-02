@@ -50,6 +50,21 @@ var gif_categories = []string{
 	"run",
 	"bonk",
 	"tableflip",
+	"bleh",
+	"blowkiss",
+	"carry",
+	"clap",
+	"confused",
+	"kabedon",
+	"lappillow",
+	"nya",
+	"salute",
+	"shake",
+	"shocked",
+	"sip",
+	"spin",
+	"teehee",
+	"wag",
 }
 
 var categories = append(gif_categories, image_categories...)
