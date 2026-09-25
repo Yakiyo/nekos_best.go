@@ -10,9 +10,6 @@ import (
 	"time"
 )
 
-var client = &http.Client{}
-var userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
-
 // Fetch multiple results from a category
 func FetchMany(category string, amount int) ([]NBResponse, error) {
 	if !isValidCategory(category) {
@@ -21,13 +18,8 @@ func FetchMany(category string, amount int) ([]NBResponse, error) {
 	if amount < 1 || amount > 20 {
 		return []NBResponse{}, fmt.Errorf("amount must be between 1 and 20")
 	}
-
-	req, err := http.NewRequest("GET", "https://nekos.best/api/v2/" + category + "?amount=" + fmt.Sprint(amount), nil)
-	req.Header.Set("User-Agent", userAgent)
-
-    res, err := client.Do(req)
+	res, err := http.Get("https://nekos.best/api/v2/" + category + "?amount=" + fmt.Sprint(amount))
 	if err != nil {
-		fmt.Printf("error while fetching neko: %v\n", err)
 		return []NBResponse{}, err
 	}
 	defer res.Body.Close()
@@ -38,9 +30,6 @@ func FetchMany(category string, amount int) ([]NBResponse, error) {
 	}
 	r := &fullNBResponse{}
 	json.Unmarshal(bytes, r)
-
-	fmt.Printf("Response: %v\n", res)
-	fmt.Printf("Results: %v\n", r.Results)
 
 	return r.Results, nil
 }
@@ -90,11 +79,7 @@ func Search(query string, category string, amount int) ([]NBResponse, error) {
 		"category": {category},
 		"type":     {t},
 	}
-
-	req, err := http.NewRequest("GET", fmt.Sprintf("https://nekos.best/api/v2/%v?%v", category, params.Encode()), nil)
-	req.Header.Set("User-Agent", userAgent)
-
-	res, err := client.Do(req)
+	res, err := http.Get(fmt.Sprintf("https://nekos.best/api/v2/%v?%v", category, params.Encode()))
 	if err != nil {
 		return []NBResponse{}, err
 	}
